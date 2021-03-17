@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>\[WPF\] Tự động sắp xếp một GridView khi click vào header một column | Nguyễn Xuân Luân</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="Trong WPF để trình bày dữ liệu dưới dạng lưới ta có thể sử dụng GridView. Tuy nhiên, nếu bạn muốn sắp xếp nó, việc này sẽ khó hơn một chút với DataGridView trong Windows Forms (khi người dùng nhấp vào ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.89986362.css" as="style"><link rel="preload" href="/assets/js/app.ec123beb.js" as="script"><link rel="preload" href="/assets/js/6.fb91a70b.js" as="script"><link rel="preload" href="/assets/js/3.8f2ff4cb.js" as="script"><link rel="preload" href="/assets/js/14.e413ae28.js" as="script"><link rel="prefetch" href="/assets/js/10.fe65ec51.js"><link rel="prefetch" href="/assets/js/11.b7ed8daf.js"><link rel="prefetch" href="/assets/js/12.f0265d94.js"><link rel="prefetch" href="/assets/js/13.7394a42e.js"><link rel="prefetch" href="/assets/js/15.7339bf11.js"><link rel="prefetch" href="/assets/js/16.03ca07a8.js"><link rel="prefetch" href="/assets/js/17.87bff9c4.js"><link rel="prefetch" href="/assets/js/18.0cd52dcf.js"><link rel="prefetch" href="/assets/js/19.4874e0ac.js"><link rel="prefetch" href="/assets/js/4.35df73f0.js"><link rel="prefetch" href="/assets/js/5.76fadce8.js"><link rel="prefetch" href="/assets/js/7.7fc6c8ff.js"><link rel="prefetch" href="/assets/js/8.d39a534b.js"><link rel="prefetch" href="/assets/js/9.754a50b0.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.0cbd6f70.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.89986362.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-blog__global-layout"><section id="header-wrapper"><header id="header"><div class="header-wrapper"><div class="title"><a href="/" class="nav-link home-link">Nguyễn Xuân Luân </a></div> <div class="header-right-wrap"><ul class="nav"><li class="nav-item"><a href="/" class="nav-link">Trang chủ</a></li><li class="nav-item"><a href="/tag/" class="nav-link">Tags</a></li><li class="nav-item"><a href="/cv/" class="nav-link">CV</a></li><li class="nav-item"><a href="/links/" class="nav-link">Liên kết</a></li></ul> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></div></header></section> <div id="mobile-header"><div class="mobile-header-bar"><div class="mobile-header-title"><a href="/" class="nav-link mobile-home-link">Nguyễn Xuân Luân </a> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div> <div class="mobile-menu-wrapper"><hr class="menu-divider"> <ul class="mobile-nav"><li class="mobile-nav-item"><a href="/" class="nav-link">Trang chủ</a></li><li class="mobile-nav-item"><a href="/tag/" class="nav-link">Tags</a></li><li class="mobile-nav-item"><a href="/cv/" class="nav-link">CV</a></li><li class="mobile-nav-item"><a href="/links/" class="nav-link">Liên kết</a></li> <li class="mobile-nav-item"><!----></li></ul></div></div></div> <div class="content-wrapper"><div id="vuepress-theme-blog__post-layout"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><header><h1 itemprop="name headline" class="post-title">
+        \[WPF\] Tự động sắp xếp một GridView khi click vào header một column
+      </h1> <div class="post-meta"><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="post-meta-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">Nguyễn Xuân Luân</span> <!----></div> <div class="post-meta-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2020-02-22T00:00:00.000Z">
+      Sat Feb 22 2020
+    </time></div> <ul itemprop="keywords" class="post-meta-tags"><li class="post-tag" data-v-42ccfcd5><a href="/tag/wpf" data-v-42ccfcd5><span data-v-42ccfcd5>wpf</span></a></li><li class="post-tag" data-v-42ccfcd5><a href="/tag/csharp" data-v-42ccfcd5><span data-v-42ccfcd5>csharp</span></a></li></ul></div></header> <div itemprop="articleBody" class="content__default"><p>Trong WPF để trình bày dữ liệu dưới dạng lưới ta có thể sử dụng GridView. Tuy nhiên, nếu bạn muốn sắp xếp nó, việc này sẽ khó hơn một chút với DataGridView trong Windows Forms (khi người dùng nhấp vào tiêu đề cột, lưới sẽ được tự động sắp xếp). Sau một thời gian tìm hiểu mình đã tìm thấy một giải pháp cho vấn đề này. Hôm nay mình sẽ chia sẻ với các bạn về nó, nó dựa trên sự kiện Click của lớp GridViewColumnHeader.
+Đầu tiên ta tạo ra một class để xử lý các hành động sắp xếp với column</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GridViewSort</span>
+    <span class="token punctuation">{</span>
+        <span class="token preprocessor property">#<span class="token directive keyword">region</span> Public attached properties</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">ICommand</span> <span class="token function">GetCommand</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span>ICommand<span class="token punctuation">)</span>obj<span class="token punctuation">.</span><span class="token function">GetValue</span><span class="token punctuation">(</span>CommandProperty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SetCommand</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">,</span> <span class="token class-name">ICommand</span> <span class="token keyword">value</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            obj<span class="token punctuation">.</span><span class="token function">SetValue</span><span class="token punctuation">(</span>CommandProperty<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name">DependencyProperty</span> CommandProperty <span class="token operator">=</span>
+            DependencyProperty<span class="token punctuation">.</span><span class="token function">RegisterAttached</span><span class="token punctuation">(</span>
+                <span class="token string">&quot;Command&quot;</span><span class="token punctuation">,</span>
+                <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">ICommand</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">GridViewSort</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token keyword">new</span> <span class="token constructor-invocation class-name">UIPropertyMetadata</span><span class="token punctuation">(</span>
+                    <span class="token keyword">null</span><span class="token punctuation">,</span>
+                    <span class="token punctuation">(</span>o<span class="token punctuation">,</span> e<span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token class-name">ItemsControl</span> listView <span class="token operator">=</span> o <span class="token keyword">as</span> <span class="token class-name">ItemsControl</span><span class="token punctuation">;</span>
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span>listView <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">{</span>
+                            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">GetAutoSort</span><span class="token punctuation">(</span>listView<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// Don't change click handler if AutoSort enabled</span>
+                            <span class="token punctuation">{</span>
+                                <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token punctuation">.</span>OldValue <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> e<span class="token punctuation">.</span>NewValue <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                                <span class="token punctuation">{</span>
+                                    listView<span class="token punctuation">.</span><span class="token function">RemoveHandler</span><span class="token punctuation">(</span>GridViewColumnHeader<span class="token punctuation">.</span>ClickEvent<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">RoutedEventHandler</span><span class="token punctuation">(</span>ColumnHeader_Click<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                                <span class="token punctuation">}</span>
+                                <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token punctuation">.</span>OldValue <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> e<span class="token punctuation">.</span>NewValue <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                                <span class="token punctuation">{</span>
+                                    listView<span class="token punctuation">.</span><span class="token function">AddHandler</span><span class="token punctuation">(</span>GridViewColumnHeader<span class="token punctuation">.</span>ClickEvent<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">RoutedEventHandler</span><span class="token punctuation">(</span>ColumnHeader_Click<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                                <span class="token punctuation">}</span>
+                            <span class="token punctuation">}</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">)</span>
+            <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token function">GetAutoSort</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">bool</span><span class="token punctuation">)</span>obj<span class="token punctuation">.</span><span class="token function">GetValue</span><span class="token punctuation">(</span>AutoSortProperty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SetAutoSort</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword">bool</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            obj<span class="token punctuation">.</span><span class="token function">SetValue</span><span class="token punctuation">(</span>AutoSortProperty<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// Using a DependencyProperty as the backing store for AutoSort.  This enables animation, styling, binding, etc...</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name">DependencyProperty</span> AutoSortProperty <span class="token operator">=</span>
+            DependencyProperty<span class="token punctuation">.</span><span class="token function">RegisterAttached</span><span class="token punctuation">(</span>
+                <span class="token string">&quot;AutoSort&quot;</span><span class="token punctuation">,</span>
+                <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name"><span class="token keyword">bool</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">GridViewSort</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token keyword">new</span> <span class="token constructor-invocation class-name">UIPropertyMetadata</span><span class="token punctuation">(</span>
+                    <span class="token boolean">false</span><span class="token punctuation">,</span>
+                    <span class="token punctuation">(</span>o<span class="token punctuation">,</span> e<span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token class-name">ListView</span> listView <span class="token operator">=</span> o <span class="token keyword">as</span> <span class="token class-name">ListView</span><span class="token punctuation">;</span>
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span>listView <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">{</span>
+                            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">GetCommand</span><span class="token punctuation">(</span>listView<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token comment">// Don't change click handler if a command is set</span>
+                            <span class="token punctuation">{</span>
+                                <span class="token class-name"><span class="token keyword">bool</span></span> oldValue <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">bool</span><span class="token punctuation">)</span>e<span class="token punctuation">.</span>OldValue<span class="token punctuation">;</span>
+                                <span class="token class-name"><span class="token keyword">bool</span></span> newValue <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">bool</span><span class="token punctuation">)</span>e<span class="token punctuation">.</span>NewValue<span class="token punctuation">;</span>
+                                <span class="token keyword">if</span> <span class="token punctuation">(</span>oldValue <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>newValue<span class="token punctuation">)</span>
+                                <span class="token punctuation">{</span>
+                                    listView<span class="token punctuation">.</span><span class="token function">RemoveHandler</span><span class="token punctuation">(</span>GridViewColumnHeader<span class="token punctuation">.</span>ClickEvent<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">RoutedEventHandler</span><span class="token punctuation">(</span>ColumnHeader_Click<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                                <span class="token punctuation">}</span>
+                                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>oldValue <span class="token operator">&amp;&amp;</span> newValue<span class="token punctuation">)</span>
+                                <span class="token punctuation">{</span>
+                                    listView<span class="token punctuation">.</span><span class="token function">AddHandler</span><span class="token punctuation">(</span>GridViewColumnHeader<span class="token punctuation">.</span>ClickEvent<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">RoutedEventHandler</span><span class="token punctuation">(</span>ColumnHeader_Click<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                                <span class="token punctuation">}</span>
+                            <span class="token punctuation">}</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">)</span>
+            <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> <span class="token function">GetPropertyName</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">)</span>obj<span class="token punctuation">.</span><span class="token function">GetValue</span><span class="token punctuation">(</span>PropertyNameProperty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SetPropertyName</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword">string</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            obj<span class="token punctuation">.</span><span class="token function">SetValue</span><span class="token punctuation">(</span>PropertyNameProperty<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// Using a DependencyProperty as the backing store for PropertyName.  This enables animation, styling, binding, etc...</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name">DependencyProperty</span> PropertyNameProperty <span class="token operator">=</span>
+            DependencyProperty<span class="token punctuation">.</span><span class="token function">RegisterAttached</span><span class="token punctuation">(</span>
+                <span class="token string">&quot;PropertyName&quot;</span><span class="token punctuation">,</span>
+                <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name"><span class="token keyword">string</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">GridViewSort</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token keyword">new</span> <span class="token constructor-invocation class-name">UIPropertyMetadata</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token function">GetShowSortGlyph</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">bool</span><span class="token punctuation">)</span>obj<span class="token punctuation">.</span><span class="token function">GetValue</span><span class="token punctuation">(</span>ShowSortGlyphProperty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SetShowSortGlyph</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword">bool</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            obj<span class="token punctuation">.</span><span class="token function">SetValue</span><span class="token punctuation">(</span>ShowSortGlyphProperty<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// Using a DependencyProperty as the backing store for ShowSortGlyph.  This enables animation, styling, binding, etc...</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name">DependencyProperty</span> ShowSortGlyphProperty <span class="token operator">=</span>
+            DependencyProperty<span class="token punctuation">.</span><span class="token function">RegisterAttached</span><span class="token punctuation">(</span><span class="token string">&quot;ShowSortGlyph&quot;</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name"><span class="token keyword">bool</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">GridViewSort</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">UIPropertyMetadata</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">ImageSource</span> <span class="token function">GetSortGlyphAscending</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span>ImageSource<span class="token punctuation">)</span>obj<span class="token punctuation">.</span><span class="token function">GetValue</span><span class="token punctuation">(</span>SortGlyphAscendingProperty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SetSortGlyphAscending</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">,</span> <span class="token class-name">ImageSource</span> <span class="token keyword">value</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            obj<span class="token punctuation">.</span><span class="token function">SetValue</span><span class="token punctuation">(</span>SortGlyphAscendingProperty<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// Using a DependencyProperty as the backing store for SortGlyphAscending.  This enables animation, styling, binding, etc...</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name">DependencyProperty</span> SortGlyphAscendingProperty <span class="token operator">=</span>
+            DependencyProperty<span class="token punctuation">.</span><span class="token function">RegisterAttached</span><span class="token punctuation">(</span><span class="token string">&quot;SortGlyphAscending&quot;</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">ImageSource</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">GridViewSort</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">UIPropertyMetadata</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">ImageSource</span> <span class="token function">GetSortGlyphDescending</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span>ImageSource<span class="token punctuation">)</span>obj<span class="token punctuation">.</span><span class="token function">GetValue</span><span class="token punctuation">(</span>SortGlyphDescendingProperty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SetSortGlyphDescending</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">,</span> <span class="token class-name">ImageSource</span> <span class="token keyword">value</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            obj<span class="token punctuation">.</span><span class="token function">SetValue</span><span class="token punctuation">(</span>SortGlyphDescendingProperty<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// Using a DependencyProperty as the backing store for SortGlyphDescending.  This enables animation, styling, binding, etc...</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name">DependencyProperty</span> SortGlyphDescendingProperty <span class="token operator">=</span>
+            DependencyProperty<span class="token punctuation">.</span><span class="token function">RegisterAttached</span><span class="token punctuation">(</span><span class="token string">&quot;SortGlyphDescending&quot;</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">ImageSource</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">GridViewSort</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">UIPropertyMetadata</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+
+        <span class="token preprocessor property">#<span class="token directive keyword">region</span> Private attached properties</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token return-type class-name">GridViewColumnHeader</span> <span class="token function">GetSortedColumnHeader</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span>GridViewColumnHeader<span class="token punctuation">)</span>obj<span class="token punctuation">.</span><span class="token function">GetValue</span><span class="token punctuation">(</span>SortedColumnHeaderProperty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SetSortedColumnHeader</span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> obj<span class="token punctuation">,</span> <span class="token class-name">GridViewColumnHeader</span> <span class="token keyword">value</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            obj<span class="token punctuation">.</span><span class="token function">SetValue</span><span class="token punctuation">(</span>SortedColumnHeaderProperty<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// Using a DependencyProperty as the backing store for SortedColumn.  This enables animation, styling, binding, etc...</span>
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name">DependencyProperty</span> SortedColumnHeaderProperty <span class="token operator">=</span>
+            DependencyProperty<span class="token punctuation">.</span><span class="token function">RegisterAttached</span><span class="token punctuation">(</span><span class="token string">&quot;SortedColumnHeader&quot;</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">GridViewColumnHeader</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">GridViewSort</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">UIPropertyMetadata</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+
+        <span class="token preprocessor property">#<span class="token directive keyword">region</span> Column header click event handler</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ColumnHeader_Click</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">object</span></span> sender<span class="token punctuation">,</span> <span class="token class-name">RoutedEventArgs</span> e<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token class-name">GridViewColumnHeader</span> headerClicked <span class="token operator">=</span> e<span class="token punctuation">.</span>OriginalSource <span class="token keyword">as</span> <span class="token class-name">GridViewColumnHeader</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>headerClicked <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> headerClicked<span class="token punctuation">.</span>Column <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token class-name"><span class="token keyword">string</span></span> propertyName <span class="token operator">=</span> <span class="token function">GetPropertyName</span><span class="token punctuation">(</span>headerClicked<span class="token punctuation">.</span>Column<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">IsNullOrEmpty</span><span class="token punctuation">(</span>propertyName<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token class-name">ListView</span> listView <span class="token operator">=</span> <span class="token generic-method"><span class="token function">GetAncestor</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>ListView<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span>headerClicked<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>listView <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token class-name">ICommand</span> command <span class="token operator">=</span> <span class="token function">GetCommand</span><span class="token punctuation">(</span>listView<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span>command <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">{</span>
+                            <span class="token keyword">if</span> <span class="token punctuation">(</span>command<span class="token punctuation">.</span><span class="token function">CanExecute</span><span class="token punctuation">(</span>propertyName<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                            <span class="token punctuation">{</span>
+                                command<span class="token punctuation">.</span><span class="token function">Execute</span><span class="token punctuation">(</span>propertyName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token punctuation">}</span>
+                        <span class="token punctuation">}</span>
+                        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">GetAutoSort</span><span class="token punctuation">(</span>listView<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">{</span>
+                            <span class="token function">ApplySort</span><span class="token punctuation">(</span>listView<span class="token punctuation">.</span>Items<span class="token punctuation">,</span> propertyName<span class="token punctuation">,</span> listView<span class="token punctuation">,</span> headerClicked<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+
+        <span class="token preprocessor property">#<span class="token directive keyword">region</span> Helper methods</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">T</span> <span class="token generic-method"><span class="token function">GetAncestor</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>T<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token class-name">DependencyObject</span> reference<span class="token punctuation">)</span> <span class="token keyword">where</span> <span class="token class-name">T</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">DependencyObject</span></span>
+        <span class="token punctuation">{</span>
+            <span class="token class-name">DependencyObject</span> parent <span class="token operator">=</span> VisualTreeHelper<span class="token punctuation">.</span><span class="token function">GetParent</span><span class="token punctuation">(</span>reference<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>parent <span class="token keyword">is</span> <span class="token class-name">T</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                parent <span class="token operator">=</span> VisualTreeHelper<span class="token punctuation">.</span><span class="token function">GetParent</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>parent <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span> <span class="token punctuation">(</span>T<span class="token punctuation">)</span>parent<span class="token punctuation">;</span>
+            <span class="token keyword">else</span>
+                <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ApplySort</span><span class="token punctuation">(</span><span class="token class-name">ICollectionView</span> view<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword">string</span></span> propertyName<span class="token punctuation">,</span> <span class="token class-name">ListView</span> listView<span class="token punctuation">,</span> <span class="token class-name">GridViewColumnHeader</span> sortedColumnHeader<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token class-name">ListSortDirection</span> direction <span class="token operator">=</span> ListSortDirection<span class="token punctuation">.</span>Ascending<span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>view<span class="token punctuation">.</span>SortDescriptions<span class="token punctuation">.</span>Count <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token class-name">SortDescription</span> currentSort <span class="token operator">=</span> view<span class="token punctuation">.</span>SortDescriptions<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>currentSort<span class="token punctuation">.</span>PropertyName <span class="token operator">==</span> propertyName<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>currentSort<span class="token punctuation">.</span>Direction <span class="token operator">==</span> ListSortDirection<span class="token punctuation">.</span>Ascending<span class="token punctuation">)</span>
+                        direction <span class="token operator">=</span> ListSortDirection<span class="token punctuation">.</span>Descending<span class="token punctuation">;</span>
+                    <span class="token keyword">else</span>
+                        direction <span class="token operator">=</span> ListSortDirection<span class="token punctuation">.</span>Ascending<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                view<span class="token punctuation">.</span>SortDescriptions<span class="token punctuation">.</span><span class="token function">Clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token class-name">GridViewColumnHeader</span> currentSortedColumnHeader <span class="token operator">=</span> <span class="token function">GetSortedColumnHeader</span><span class="token punctuation">(</span>listView<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>currentSortedColumnHeader <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token function">RemoveSortGlyph</span><span class="token punctuation">(</span>currentSortedColumnHeader<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">IsNullOrEmpty</span><span class="token punctuation">(</span>propertyName<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                view<span class="token punctuation">.</span>SortDescriptions<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">SortDescription</span><span class="token punctuation">(</span>propertyName<span class="token punctuation">,</span> direction<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">GetShowSortGlyph</span><span class="token punctuation">(</span>listView<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    <span class="token function">AddSortGlyph</span><span class="token punctuation">(</span>
+                        sortedColumnHeader<span class="token punctuation">,</span>
+                        direction<span class="token punctuation">,</span>
+                        direction <span class="token operator">==</span> <span class="token return-type class-name">ListSortDirection<span class="token punctuation">.</span>Ascending <span class="token punctuation">?</span></span> <span class="token function">GetSortGlyphAscending</span><span class="token punctuation">(</span>listView<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token function">GetSortGlyphDescending</span><span class="token punctuation">(</span>listView<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">SetSortedColumnHeader</span><span class="token punctuation">(</span>listView<span class="token punctuation">,</span> sortedColumnHeader<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">AddSortGlyph</span><span class="token punctuation">(</span><span class="token class-name">GridViewColumnHeader</span> columnHeader<span class="token punctuation">,</span> <span class="token class-name">ListSortDirection</span> direction<span class="token punctuation">,</span> <span class="token class-name">ImageSource</span> sortGlyph<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token class-name">AdornerLayer</span> adornerLayer <span class="token operator">=</span> AdornerLayer<span class="token punctuation">.</span><span class="token function">GetAdornerLayer</span><span class="token punctuation">(</span>columnHeader<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            adornerLayer<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>
+                <span class="token keyword">new</span> <span class="token constructor-invocation class-name">SortGlyphAdorner</span><span class="token punctuation">(</span>
+                    columnHeader<span class="token punctuation">,</span>
+                    direction<span class="token punctuation">,</span>
+                    sortGlyph
+                    <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">RemoveSortGlyph</span><span class="token punctuation">(</span><span class="token class-name">GridViewColumnHeader</span> columnHeader<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token class-name">AdornerLayer</span> adornerLayer <span class="token operator">=</span> AdornerLayer<span class="token punctuation">.</span><span class="token function">GetAdornerLayer</span><span class="token punctuation">(</span>columnHeader<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">Adorner<span class="token punctuation">[</span><span class="token punctuation">]</span></span> adorners <span class="token operator">=</span> adornerLayer<span class="token punctuation">.</span><span class="token function">GetAdorners</span><span class="token punctuation">(</span>columnHeader<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>adorners <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name">Adorner</span> adorner <span class="token keyword">in</span> adorners<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>adorner <span class="token keyword">is</span> <span class="token class-name">SortGlyphAdorner</span><span class="token punctuation">)</span>
+                        adornerLayer<span class="token punctuation">.</span><span class="token function">Remove</span><span class="token punctuation">(</span>adorner<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+
+        <span class="token preprocessor property">#<span class="token directive keyword">region</span> SortGlyphAdorner nested class</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">class</span> <span class="token class-name">SortGlyphAdorner</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">Adorner</span></span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">private</span> <span class="token class-name">GridViewColumnHeader</span> _columnHeader<span class="token punctuation">;</span>
+            <span class="token keyword">private</span> <span class="token class-name">ListSortDirection</span> _direction<span class="token punctuation">;</span>
+            <span class="token keyword">private</span> <span class="token class-name">ImageSource</span> _sortGlyph<span class="token punctuation">;</span>
+
+            <span class="token keyword">public</span> <span class="token function">SortGlyphAdorner</span><span class="token punctuation">(</span><span class="token class-name">GridViewColumnHeader</span> columnHeader<span class="token punctuation">,</span> <span class="token class-name">ListSortDirection</span> direction<span class="token punctuation">,</span> <span class="token class-name">ImageSource</span> sortGlyph<span class="token punctuation">)</span>
+                <span class="token punctuation">:</span> <span class="token keyword">base</span><span class="token punctuation">(</span>columnHeader<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                _columnHeader <span class="token operator">=</span> columnHeader<span class="token punctuation">;</span>
+                _direction <span class="token operator">=</span> direction<span class="token punctuation">;</span>
+                _sortGlyph <span class="token operator">=</span> sortGlyph<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">private</span> <span class="token return-type class-name">Geometry</span> <span class="token function">GetDefaultGlyph</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token class-name"><span class="token keyword">double</span></span> x1 <span class="token operator">=</span> _columnHeader<span class="token punctuation">.</span>ActualWidth <span class="token operator">-</span> <span class="token number">13</span><span class="token punctuation">;</span>
+                <span class="token class-name"><span class="token keyword">double</span></span> x2 <span class="token operator">=</span> x1 <span class="token operator">+</span> <span class="token number">10</span><span class="token punctuation">;</span>
+                <span class="token class-name"><span class="token keyword">double</span></span> x3 <span class="token operator">=</span> x1 <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">;</span>
+                <span class="token class-name"><span class="token keyword">double</span></span> y1 <span class="token operator">=</span> _columnHeader<span class="token punctuation">.</span>ActualHeight <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> <span class="token number">3</span><span class="token punctuation">;</span>
+                <span class="token class-name"><span class="token keyword">double</span></span> y2 <span class="token operator">=</span> y1 <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>_direction <span class="token operator">==</span> ListSortDirection<span class="token punctuation">.</span>Ascending<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token class-name"><span class="token keyword">double</span></span> tmp <span class="token operator">=</span> y1<span class="token punctuation">;</span>
+                    y1 <span class="token operator">=</span> y2<span class="token punctuation">;</span>
+                    y2 <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token class-name">PathSegmentCollection</span> pathSegmentCollection <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PathSegmentCollection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                pathSegmentCollection<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">LineSegment</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">Point</span><span class="token punctuation">(</span>x2<span class="token punctuation">,</span> y1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                pathSegmentCollection<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">LineSegment</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">Point</span><span class="token punctuation">(</span>x3<span class="token punctuation">,</span> y2<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token class-name">PathFigure</span> pathFigure <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PathFigure</span><span class="token punctuation">(</span>
+                    <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Point</span><span class="token punctuation">(</span>x1<span class="token punctuation">,</span> y1<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    pathSegmentCollection<span class="token punctuation">,</span>
+                    <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token class-name">PathFigureCollection</span> pathFigureCollection <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PathFigureCollection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                pathFigureCollection<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>pathFigure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token class-name">PathGeometry</span> pathGeometry <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PathGeometry</span><span class="token punctuation">(</span>pathFigureCollection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span> pathGeometry<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">protected</span> <span class="token keyword">override</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnRender</span><span class="token punctuation">(</span><span class="token class-name">DrawingContext</span> drawingContext<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">base</span><span class="token punctuation">.</span><span class="token function">OnRender</span><span class="token punctuation">(</span>drawingContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>_sortGlyph <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token class-name"><span class="token keyword">double</span></span> x <span class="token operator">=</span> _columnHeader<span class="token punctuation">.</span>ActualWidth <span class="token operator">-</span> <span class="token number">13</span><span class="token punctuation">;</span>
+                    <span class="token class-name"><span class="token keyword">double</span></span> y <span class="token operator">=</span> _columnHeader<span class="token punctuation">.</span>ActualHeight <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> <span class="token number">5</span><span class="token punctuation">;</span>
+                    <span class="token class-name">Rect</span> rect <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Rect</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    drawingContext<span class="token punctuation">.</span><span class="token function">DrawImage</span><span class="token punctuation">(</span>_sortGlyph<span class="token punctuation">,</span> rect<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">else</span>
+                <span class="token punctuation">{</span>
+                    drawingContext<span class="token punctuation">.</span><span class="token function">DrawGeometry</span><span class="token punctuation">(</span>Brushes<span class="token punctuation">.</span>LightGray<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Pen</span><span class="token punctuation">(</span>Brushes<span class="token punctuation">.</span>Gray<span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">GetDefaultGlyph</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+    <span class="token punctuation">}</span>
+</code></pre></div><p>Thuộc tính GridViewSort.AutoSort cho phép sắp xếp tự động cho ListView. Thuộc tính GridViewSort.PropertyName, được xác định cho mỗi cột, cho biết thuộc tính sẽ sử dụng làm tiêu chí sắp xếp. Khi bạn click vào header một cột sẽ kích hoạt sắp xếp trên cột đó.</p> <p>Trong trường hợp bạn cần xử lý việc sắp xếp theo cách thủ công, bạn có thể sử dụng thuộc tính đính kèm GridViewSort.Command. Khi được sử dụng với mẫu MVVM, thuộc tính này cho phép bạn liên kết với command được khai báo trong ViewModel.</p> <div class="language-xml extra-class"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ListView</span> <span class="token attr-name">ItemsSource</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>{Binding }<span class="token punctuation">&quot;</span></span>
+      <span class="token attr-name">IsSynchronizedWithCurrentItem</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>True<span class="token punctuation">&quot;</span></span>
+     <span class="token attr-name"><span class="token namespace">local:</span>GridViewSort.Command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>{Binding SortCommand}<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+...
+</code></pre></div><p>Nếu cả hai thuộc tính Command và AutoSort được thiết lập, Command sẽ được ưu tiên. AutoSort bị bỏ qua.</p> <p>Nếu bạn muốn thay đổi icon hiển thị khi sắp xếp có thể sử dụng 2 thuộc tính SortGlyphAscending và SortGlyphDescending. Bạn cũng có thể vô hiệu hóa các glyph sắp xếp, bằng cách đặt thuộc tính đính kèm ShowSortGlyph thành false. Glyph sort chỉ được hiển thị khi sử dụng chế độ sắp xếp tự động (AutoSort = true). Trường hợp sắp xếp tùy chỉnh sử dụng thuộc tính Command chưa được xử lý.</p> <div class="language-xml extra-class"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ListView</span> <span class="token attr-name">ItemsSource</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>{Binding Persons}<span class="token punctuation">&quot;</span></span>
+          <span class="token attr-name">IsSynchronizedWithCurrentItem</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>True<span class="token punctuation">&quot;</span></span>
+          <span class="token attr-name"><span class="token namespace">local:</span>GridViewSort.AutoSort</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>True<span class="token punctuation">&quot;</span></span>
+          <span class="token attr-name"><span class="token namespace">local:</span>GridViewSort.SortGlyphAscending</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>/Images/sort-ascending.png<span class="token punctuation">&quot;</span></span>
+          <span class="token attr-name"><span class="token namespace">local:</span>GridViewSort.SortGlyphDescending</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>/Images/sort-descending.png<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>Bài viết có tham khảo nguồn <a href="https://thomaslevesque.com/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/" target="_blank" rel="noopener noreferrer">Thomas Levesque's .NET blog<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></div> <footer><!----> <hr> <!----></footer></article> <!----></div></div> <footer class="footer" data-v-3d9deeb8><div class="footer-left-wrap" data-v-3d9deeb8><ul class="contact" data-v-3d9deeb8></ul></div> <div class="footer-right-wrap" data-v-3d9deeb8><ul class="copyright" data-v-3d9deeb8></ul></div></footer></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.ec123beb.js" defer></script><script src="/assets/js/6.fb91a70b.js" defer></script><script src="/assets/js/3.8f2ff4cb.js" defer></script><script src="/assets/js/14.e413ae28.js" defer></script>
+  </body>
+</html>
